@@ -1,8 +1,6 @@
 package edu.mum.builder;
 
-import edu.mum.domain.Address;
 import edu.mum.domain.User;
-import edu.mum.domain.UserCredentials;
 
 public class UserBuilder {
 
@@ -11,17 +9,6 @@ public class UserBuilder {
  	public UserBuilder() {
 		this.user = new User();
 	}
-
- 	
-    public UserBuilder withUserCredentials(UserCredentials credentials) {
-        this.user.setUserCredentials(credentials);
-        return this;
-    }
-
-    public UserBuilder withAddress(Address address) {
-        this.user.addAddress(address);
-        return this;
-    }
 
     public UserBuilder withFirstName(String name) {
         this.user.setFirstName(name);
@@ -37,7 +24,6 @@ public class UserBuilder {
         this.user.setRanking(number);
         return this;
     }
-
 
     public UserBuilder withAdmin(Boolean admin) {
         this.user.setAdmin(admin);

@@ -43,12 +43,6 @@ import javax.persistence.Version;
     @Column(name = "IS_ADMIN", nullable = false)
     private Boolean admin = false;
 
-    @OneToOne(mappedBy="user")
-	private UserCredentials userCredentials;
-
-	@OneToMany(fetch=FetchType.EAGER,cascade={ CascadeType.PERSIST, CascadeType.MERGE })
-    private Set<Address> addresses = new HashSet<Address>();
-
 	public Long getId() {
 		return id;
 	}
@@ -113,28 +107,8 @@ import javax.persistence.Version;
 		this.admin = admin;
 	}
 
-	public UserCredentials getUserCredentials() {
-		return userCredentials;
-	}
-
-	public void setUserCredentials(UserCredentials userCredentials) {
-		this.userCredentials = userCredentials;
-	}
-
-	public Set<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(Set<Address> addresses) {
-		this.addresses = addresses;
-	}
-
 	public void setRanking(Integer ranking) {
 		this.ranking = ranking;
-	}
-
-	public void addAddress(Address address) {
-		this.addresses.add(address);		
 	}
 
 }
