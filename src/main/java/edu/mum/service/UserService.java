@@ -10,5 +10,4 @@ public interface UserService {
 	public List<User> findAll();
 	public User findByEmail(String email);
 	public User update(User user);
-	public User testRefresh(User user);
 }
