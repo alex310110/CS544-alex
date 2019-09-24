@@ -61,8 +61,8 @@ public class TestUser {
 
 	void mockData() {
 		System.out.println("********* Mock More Data **********");
-		final int mockNum = 200;
-		final int mockFollowStep = 10;
+		final int mockNum = 100;
+		final int mockFollowStep = 100;
 
 		// mock sellers
 		List<Seller> mockSellers = new ArrayList<>();

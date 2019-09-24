@@ -31,12 +31,10 @@ public class Buyer {
 	// performance annotations
 //	(fetch = FetchType.EAGER)
 	(fetch = FetchType.LAZY)
-//	@Fetch(FetchMode.SELECT)
 //	@Fetch(FetchMode.JOIN)
 	@Fetch(FetchMode.SUBSELECT)
-//	@BatchSize(size = 3)
+//	@Fetch(FetchMode.SELECT)
 //	@BatchSize(size = 10)
-//	@BatchSize(size = 30)
 
 	@JoinTable(name = "following", joinColumns = { @JoinColumn(name = "buyer_id")
 	}, inverseJoinColumns = { @JoinColumn(name = "seller_id")
