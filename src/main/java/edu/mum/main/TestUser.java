@@ -1,5 +1,8 @@
 package edu.mum.main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,18 +46,54 @@ public class TestUser {
 						.withDesc("Jane Doe")
 						.withPic("jd.jpg")
 						.build();
-		
+
 		sellerService.save(seller);
 		buyer.followSeller(seller);
 		buyerService.save(buyer);
 
-		System.out.println();
-		System.out.println("*********  User **********");
-
+		System.out.println("********* User **********");
 		User user;
 		user = userService.findByEmail("jos@gmail.com");
 		System.out.println("User Name: " + user.getFirstName() + " " + user.getLastName());
 		user = userService.findByEmail("jad@hotmail.com");
 		System.out.println("User Name: " + user.getFirstName() + " " + user.getLastName());
+
+		System.out.println("********* Mock More Data **********");
+		final int mockNum = 100;
+		final int mockFollowStep = 10;
+
+		List<Seller> mockSellers = new ArrayList<>();
+		for (int i = 0; i < mockNum; i++) {
+			String name = "seller" + i;
+			mockSellers.add(new SellerBuilder(new UserBuilder()
+					.withFirstName(name)
+					.withLastName(name)
+					.withEmail(name + "@gmail.com")
+					.build())
+							.withName(name)
+							.withDesc(name)
+							.withPic(name + ".jpg")
+							.build());
+			sellerService.save(mockSellers.get(i));
+		}
+
+		for (int i = 0; i < mockNum; i++) {
+			String name = "buyer" + i;
+			Buyer newBuyer = new BuyerBuilder(new UserBuilder()
+					.withFirstName(name)
+					.withLastName(name)
+					.withEmail(name + "@hotmail.com")
+					.build())
+							.withPoints(i)
+							.build();
+			for (int j = i % mockFollowStep; j < mockNum; j+=mockFollowStep) {
+				newBuyer.followSeller(mockSellers.get(j));
+			}
+			if (i % 10 == 0) {
+				System.out.print(i + "/" + mockNum + "\r");
+			}
+			buyerService.save(newBuyer);
+		}
+		System.out.println("\nDone");
 	}
 }
