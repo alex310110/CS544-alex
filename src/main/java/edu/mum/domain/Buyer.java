@@ -36,7 +36,7 @@ public class Buyer {
 	@Fetch(FetchMode.SUBSELECT)
 //	@BatchSize(size = 3)
 //	@BatchSize(size = 10)
-	@BatchSize(size = 30)
+//	@BatchSize(size = 30)
 
 	@JoinTable(name = "following", joinColumns = { @JoinColumn(name = "buyer_id")
 	}, inverseJoinColumns = { @JoinColumn(name = "seller_id")

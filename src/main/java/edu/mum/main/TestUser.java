@@ -108,12 +108,7 @@ public class TestUser {
 
 	void testPerformance() {
 		System.out.println("********* Performance **********");
-
-		long startTime = System.currentTimeMillis();
 		List<Buyer> buyers = buyerService.findAllPerf();
-		long endTime = System.currentTimeMillis();
-		System.out.println("buyerService.findAllPerf() took " +
-				(endTime - startTime) + " ms");
 
 		Buyer buyer = buyers.get(9);
 		List<Seller> sellers = buyer.getSellers();
