@@ -28,7 +28,7 @@ public class TestUser {
 	@Autowired
 	SellerService sellerService;
 
-	public void testUser() {
+	void testAFewUser() {
 		Buyer buyer = new BuyerBuilder(new UserBuilder()
 				.withFirstName("John")
 				.withLastName("Smith")
@@ -57,11 +57,14 @@ public class TestUser {
 		System.out.println("User Name: " + user.getFirstName() + " " + user.getLastName());
 		user = userService.findByEmail("jad@hotmail.com");
 		System.out.println("User Name: " + user.getFirstName() + " " + user.getLastName());
+	}
 
+	void mockData() {
 		System.out.println("********* Mock More Data **********");
-		final int mockNum = 100;
+		final int mockNum = 200;
 		final int mockFollowStep = 10;
 
+		// mock sellers
 		List<Seller> mockSellers = new ArrayList<>();
 		for (int i = 0; i < mockNum; i++) {
 			String name = "seller" + i;
@@ -77,23 +80,54 @@ public class TestUser {
 			sellerService.save(mockSellers.get(i));
 		}
 
+		// mock buyers
 		for (int i = 0; i < mockNum; i++) {
 			String name = "buyer" + i;
-			Buyer newBuyer = new BuyerBuilder(new UserBuilder()
+			Buyer buyer = new BuyerBuilder(new UserBuilder()
 					.withFirstName(name)
 					.withLastName(name)
 					.withEmail(name + "@hotmail.com")
 					.build())
 							.withPoints(i)
 							.build();
-			for (int j = i % mockFollowStep; j < mockNum; j+=mockFollowStep) {
-				newBuyer.followSeller(mockSellers.get(j));
+
+			// mock buyer follows sellers
+			for (int j = i % mockFollowStep; j < mockNum; j += mockFollowStep) {
+				buyer.followSeller(mockSellers.get(j));
 			}
+			buyerService.save(buyer);
+
+			// print progress
 			if (i % 10 == 0) {
 				System.out.print(i + "/" + mockNum + "\r");
 			}
-			buyerService.save(newBuyer);
 		}
-		System.out.println("\nDone");
+
+		System.out.println("Done");
+	}
+
+	void testPerformance() {
+		System.out.println("********* Performance **********");
+
+		long startTime = System.currentTimeMillis();
+		List<Buyer> buyers = buyerService.findAllPerf();
+		long endTime = System.currentTimeMillis();
+		System.out.println("buyerService.findAllPerf() took " +
+				(endTime - startTime) + " ms");
+
+		Buyer buyer = buyers.get(9);
+		List<Seller> sellers = buyer.getSellers();
+		System.out.println(buyer.getUser().getFirstName() +
+				" is following " + sellers.size() + " sellers");
+		System.out.println("First seller: " +
+				sellers.get(0).getUser().getFirstName());
+		System.out.println("Last seller: " +
+				sellers.get(sellers.size() - 1).getUser().getFirstName());
+	}
+
+	public void testUser() {
+		testAFewUser();
+		mockData();
+		testPerformance();
 	}
 }
