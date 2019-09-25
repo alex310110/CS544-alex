@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "perf_buyer")
 public class Buyer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class Buyer {
 //	@Fetch(FetchMode.SELECT)
 //	@BatchSize(size = 10)
 
-	@JoinTable(name = "following", joinColumns = { @JoinColumn(name = "buyer_id")
+	@JoinTable(name = "perf_following", joinColumns = { @JoinColumn(name = "buyer_id")
 	}, inverseJoinColumns = { @JoinColumn(name = "seller_id")
 	})
 	private List<Seller> sellers = new ArrayList<Seller>();

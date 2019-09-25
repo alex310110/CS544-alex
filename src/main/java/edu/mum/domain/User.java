@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "perf_users")
  public class User implements Serializable  {
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
